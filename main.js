@@ -1,30 +1,54 @@
 let canvas, ctx;
-let drawables = [];
 
 let tiles = [];
 
 let w, h;
 
+let camera = 
+{
+    x: 0,
+    y: 0
+};
+
 class Tile
 {
-    constructor(color)
+    constructor(color, x, y)
     {
         this._color = color;
+        this._x = x;
+        this._y = y;
     }
+
+    get x() { return this._x; }
+    get y() { return this._y; }
+
+    set x(x) { this._x = x; }
+    set y(y) { this._y = y; }
 
     get color() { return this._color; }
 }
 
 function init()
 {
-    for(let i = 0; i < 100; i++)
+    let mapW = 100, mapH = 100;
+
+    for(let y = 0; y < mapH; y++)
     {
         tiles.push([]);
 
-        tiles[i].push(new Tile('#048'));
-        tiles[i].push(new Tile('#987'));
+        for(let x = 0; x < mapW; x++)
+        {
+            if(Math.random() < .2)
+                tiles[y].push(new Tile('#048', x * 64, y * 64));
+            else
+                tiles[y].push(new Tile('#449900', x * 64, y * 64));
+        }
     }
 }
+
+let downKeys = {};
+window.onkeyup = (e) => { downKeys[e.key] = false; }
+window.onkeydown = (e) => { downKeys[e.key] = true; }
 
 window.onload = () =>
 {
@@ -44,29 +68,36 @@ window.onresize = () =>
     canvas.height = h = window.innerHeight;
 };
 
+function tick()
+{
+    // Key codes https://keycode.info/
+    if(downKeys['ArrowLeft'] || downKeys['a'])
+        camera.x -= 10;
+    if(downKeys['ArrowRight'] || downKeys['d'])
+        camera.x += 10;
+    if(downKeys['ArrowUp'] || downKeys['w'])
+        camera.y -= 10;
+    if(downKeys['ArrowDown'] || downKeys['s'])
+        camera.y += 10;
+}
+
 function draw()
 {
     requestAnimationFrame(draw);
+    tick();
+
     ctx.clearRect(0, 0, w, h);
-
-    let r = 0, b = 0, g = 0;
-    // let r = Math.random() * 256;
-    // let g = Math.random() * 256;
-    // let b = Math.random() * 256;
-    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-
-    ctx.fillRect(0, 0, w, h);
 
     for(let y = 0; y < tiles.length; y++)
     {
-        ctx.fillStyle = tiles[y][0].color;
-        ctx.fillRect(0, y * 64, 64, 64);
-        ctx.fillStyle = tiles[y][1].color;
-        ctx.fillRect(w - 64, y * 64, 64, 64);
-    }
+        for(let x = 0; x < tiles[y].length; x++)
+        {
+            let tile = tiles[y][x];
 
-    // drawables.forEach(d =>
-    // {
-    //     d.draw(ctx);
-    // });
+            ctx.fillStyle = tile.color;
+            ctx.fillRect(tile.x - camera.x, tile.y - camera.y, 64, 64);
+            ctx.fillStyle = 'black';
+            ctx.strokeRect(tile.x - camera.x, tile.y - camera.y, 64, 64);
+        }
+    }
 }
