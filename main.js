@@ -6,14 +6,16 @@ let w, h;
 
 const DIMENSIONS = 64;
 
-let camera =
+let camera = 
 {
     x: 0,
     y: 0
 };
 
-class Tile {
-    constructor(color, x, y) {
+class Tile
+{
+    constructor(color, x, y)
+    {
         this._color = color;
         this._x = x;
         this._y = y;
@@ -28,14 +30,17 @@ class Tile {
     get color() { return this._color; }
 }
 
-function init() {
+function init()
+{
     let mapW = 100, mapH = 100;
 
-    for (let y = 0; y < mapH; y++) {
+    for(let y = 0; y < mapH; y++)
+    {
         tiles.push([]);
 
-        for (let x = 0; x < mapW; x++) {
-            if (Math.random() < .2)
+        for(let x = 0; x < mapW; x++)
+        {
+            if(Math.random() < .2)
                 tiles[y].push(new Tile('black', x * DIMENSIONS, y * DIMENSIONS));
             else
                 tiles[y].push(new Tile('#333', x * DIMENSIONS, y * DIMENSIONS));
@@ -47,7 +52,8 @@ let downKeys = {};
 window.onkeyup = (e) => { downKeys[e.key] = false; }
 window.onkeydown = (e) => { downKeys[e.key] = true; }
 
-window.onload = () => {
+window.onload = () =>
+{
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
@@ -58,42 +64,48 @@ window.onload = () => {
     draw();
 };
 
-window.onresize = () => {
+window.onresize = () =>
+{
     canvas.width = w = window.innerWidth;
     canvas.height = h = window.innerHeight;
 };
 
-function tick() {
+function tick()
+{
     // Key codes https://keycode.info/
-    if (downKeys['ArrowLeft'] || downKeys['a'])
+    if(downKeys['ArrowLeft'] || downKeys['a'])
         camera.x -= 5;
-    if (downKeys['ArrowRight'] || downKeys['d'])
+    if(downKeys['ArrowRight'] || downKeys['d'])
         camera.x += 5;
-    if (downKeys['ArrowUp'] || downKeys['w'])
+    if(downKeys['ArrowUp'] || downKeys['w'])
         camera.y -= 5;
-    if (downKeys['ArrowDown'] || downKeys['s'])
+    if(downKeys['ArrowDown'] || downKeys['s'])
         camera.y += 5;
-    
+
     camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
     camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
 }
 
-function clamp(v, min, max) {
-    if (v < min)
+function clamp(v, min, max)
+{
+    if(v < min)
         return min;
-    if (v > max)
+    if(v > max)
         return max;
 
     return v;
 }
-function draw() {
+function draw()
+{
     requestAnimationFrame(draw);
     tick();
 
     ctx.clearRect(0, 0, w, h);
 
-    for (let y = Math.floor(camera.y / DIMENSIONS); y < (camera.y + h) / DIMENSIONS; y++) {
-        for (let x = Math.floor(camera.x / DIMENSIONS); x < (camera.x + w) / DIMENSIONS; x++) {
+    for(let y = Math.floor(camera.y / DIMENSIONS); y < (camera.y + h) / DIMENSIONS; y++)
+    {
+        for(let x = Math.floor(camera.x / DIMENSIONS); x < (camera.x + w) / DIMENSIONS; x++)
+        {
             let tile = tiles[y][x];
 
             ctx.fillStyle = tile.color;
