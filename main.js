@@ -12,6 +12,12 @@ let camera =
     y: 0
 };
 
+let mouse =
+{
+    x: 0,
+    y: 0
+};
+
 class Tile
 {
     constructor(color, x, y)
@@ -20,6 +26,8 @@ class Tile
         this._x = x;
         this._y = y;
     }
+    
+    get moveable() { return this.color !== 'black'; }
 
     get x() { return this._x; }
     get y() { return this._y; }
@@ -51,6 +59,12 @@ function init()
 let downKeys = {};
 window.onkeyup = (e) => { downKeys[e.key] = false; }
 window.onkeydown = (e) => { downKeys[e.key] = true; }
+
+window.onmousemove = e =>
+{
+    mouse.x = e.x;
+    mouse.y = e.y;
+};
 
 window.onload = () =>
 {
@@ -95,12 +109,15 @@ function clamp(v, min, max)
 
     return v;
 }
+
 function draw()
 {
     requestAnimationFrame(draw);
     tick();
 
     ctx.clearRect(0, 0, w, h);
+
+    let tileOver = getTileMouseOver();
 
     for(let y = Math.floor(camera.y / DIMENSIONS); y < (camera.y + h) / DIMENSIONS; y++)
     {
@@ -110,8 +127,26 @@ function draw()
 
             ctx.fillStyle = tile.color;
             ctx.fillRect(tile.x - camera.x, tile.y - camera.y, DIMENSIONS, DIMENSIONS);
+
+            if(tile.moveable && tileOver === tile)
+            {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillRect(tileOver.x, tileOver.y, DIMENSIONS, DIMENSIONS);
+            }
+
             ctx.fillStyle = 'black';
             ctx.strokeRect(tile.x - camera.x, tile.y - camera.y, DIMENSIONS, DIMENSIONS);
         }
     }
+}
+
+function getTileMouseOver()
+{
+    if(mouse.x < 0 || mouse.x > w || mouse.y < 0 || mouse.y > h)
+        return null;
+
+    let iX = Math.floor((mouse.x - camera.x) / 64);
+    let iY = Math.floor((mouse.y - camera.y) / 64);
+
+    return tiles[iY][iX];
 }
