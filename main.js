@@ -39,9 +39,9 @@ function init()
         for(let x = 0; x < mapW; x++)
         {
             if(Math.random() < .2)
-                tiles[y].push(new Tile('#048', x * 64, y * 64));
+                tiles[y].push(new Tile('black', x * 64, y * 64));
             else
-                tiles[y].push(new Tile('#490', x * 64, y * 64));
+                tiles[y].push(new Tile('#333', x * 64, y * 64));
         }
     }
 }
