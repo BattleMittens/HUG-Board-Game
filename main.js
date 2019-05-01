@@ -41,7 +41,7 @@ function init()
             if(Math.random() < .2)
                 tiles[y].push(new Tile('#048', x * 64, y * 64));
             else
-                tiles[y].push(new Tile('#449900', x * 64, y * 64));
+                tiles[y].push(new Tile('#490', x * 64, y * 64));
         }
     }
 }
@@ -72,15 +72,27 @@ function tick()
 {
     // Key codes https://keycode.info/
     if(downKeys['ArrowLeft'] || downKeys['a'])
-        camera.x -= 10;
+        camera.x -= 5;
     if(downKeys['ArrowRight'] || downKeys['d'])
-        camera.x += 10;
+        camera.x += 5;
     if(downKeys['ArrowUp'] || downKeys['w'])
-        camera.y -= 10;
+        camera.y -= 5;
     if(downKeys['ArrowDown'] || downKeys['s'])
-        camera.y += 10;
+        camera.y += 5;
+
+    camera.x = clamp(camera.x, 0, tiles[0].length * 64 - w);
+    camera.y = clamp(camera.y, 0, tiles.length * 64 - h);
 }
 
+function clamp(v, min, max)
+{
+    if(v < min)
+        return min;
+    if(v > max)
+        return max;
+
+    return v;
+}
 function draw()
 {
     requestAnimationFrame(draw);
@@ -88,9 +100,9 @@ function draw()
 
     ctx.clearRect(0, 0, w, h);
 
-    for(let y = 0; y < tiles.length; y++)
+    for(let y = Math.floor(camera.y / 64); y < (camera.y + h) / 64; y++)
     {
-        for(let x = 0; x < tiles[y].length; x++)
+        for(let x = Math.floor(camera.x / 64); x < (camera.x + w) / 64; x++)
         {
             let tile = tiles[y][x];
 
