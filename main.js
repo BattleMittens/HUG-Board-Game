@@ -73,7 +73,17 @@ class Tile
     {
         this._x = x;
         this._y = y;
-        this._player = player === undefined ? -1 : player;
+		
+		//Why, why would you ever do this?
+        //this._player = player === undefined ? -1 : player;
+		if(player === undefined)
+		{
+			this.player = -1;
+		}
+		else
+		{
+			this.player = player;
+		}
     }
 
     get player() { return this._player; }
