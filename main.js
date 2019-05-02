@@ -1,33 +1,85 @@
+/**
+ * Stuff to draw to.
+ */
 let canvas, ctx;
 
+/**
+ * Every tile in the game (a 2d array)
+ */
 let tiles = [];
 
+/**
+ * Dimensions of the window
+ */
 let w, h;
 
+/**
+ * The dimensions of each tile
+ */
 const DIMENSIONS = 64;
 
+/**
+ * Stores the camera offsets
+ */
 let camera = 
 {
     x: 0,
     y: 0
 };
 
+/**
+ * Stores the mouse coords
+ */
 let mouse =
 {
     x: 0,
     y: 0
 };
 
+/**
+ * Stores the corresponding colors to each player
+ */
+const playerColors = 
+[
+    '#333',
+    '#b4b',
+    '#4b0',
+    '#b40',
+    '#04b'
+];
+
+/**
+ * Stores the dots available to each player (.length is how many players are playing)
+ */
+let players = [];
+
+/**
+ * The current player that's up
+ * MAKE SURE THIS GOES FROM 1-4; 0 is neutral (as in no player)
+ */
+let currentPlayer = 1;
+
+/**
+ * No player owns this tile
+ */
+const NEUTRAL = 0;
+
+/**
+ * Every tile in the game
+ */
 class Tile
 {
-    constructor(color, x, y)
+    constructor(x, y, player)
     {
-        this._color = color;
         this._x = x;
         this._y = y;
+        this._player = player === undefined ? -1 : player;
     }
+
+    get player() { return this._player; }
+    set player(p) { this._player = p ; }
     
-    get moveable() { return this.color !== 'black'; }
+    get moveable() { return this.player !== -1; }
 
     get x() { return this._x; }
     get y() { return this._y; }
@@ -35,11 +87,19 @@ class Tile
     set x(x) { this._x = x; }
     set y(y) { this._y = y; }
 
-    get color() { return this._color; }
+    get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
 }
 
-function init()
+/**
+ * Initializes the game to be played
+ * @param {number} numPlayers How many players will be playing
+ */
+function init(numPlayers)
 {
+    players = [];
+    for(let i = 0; i < numPlayers; i++)
+        player.push(0);
+
     let mapW = 100, mapH = 100;
 
     for(let y = 0; y < mapH; y++)
@@ -49,9 +109,9 @@ function init()
         for(let x = 0; x < mapW; x++)
         {
             if(Math.random() < .2)
-                tiles[y].push(new Tile('black', x * DIMENSIONS, y * DIMENSIONS));
+                tiles[y].push(new Tile(x * DIMENSIONS, y * DIMENSIONS));
             else
-                tiles[y].push(new Tile('#333', x * DIMENSIONS, y * DIMENSIONS));
+                tiles[y].push(new Tile(x * DIMENSIONS, y * DIMENSIONS, NEUTRAL));
         }
     }
 }
@@ -125,28 +185,35 @@ function draw()
         {
             let tile = tiles[y][x];
 
-            ctx.fillStyle = tile.color;
-            ctx.fillRect(tile.x - camera.x, tile.y - camera.y, DIMENSIONS, DIMENSIONS);
+            let drawX = tile.x - camera.x;
+            let drawY = tile.y - camera.y;
 
+            ctx.fillStyle = tile.color;
+            ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+
+            // Shows the user what tile they're hovering over
             if(tile.moveable && tileOver === tile)
             {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.fillRect(tileOver.x, tileOver.y, DIMENSIONS, DIMENSIONS);
+                ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
             }
 
             ctx.fillStyle = 'black';
-            ctx.strokeRect(tile.x - camera.x, tile.y - camera.y, DIMENSIONS, DIMENSIONS);
+            ctx.strokeRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
         }
     }
 }
 
+/**
+ * Gets the tile the mouse is over, or null if it isn't over any tile
+ */
 function getTileMouseOver()
 {
     if(mouse.x < 0 || mouse.x > w || mouse.y < 0 || mouse.y > h)
         return null;
 
-    let iX = Math.floor((mouse.x - camera.x) / 64);
-    let iY = Math.floor((mouse.y - camera.y) / 64);
+    let iX = Math.floor((mouse.x + camera.x) / DIMENSIONS);
+    let iY = Math.floor((mouse.y + camera.y) / DIMENSIONS);
 
     return tiles[iY][iX];
 }
