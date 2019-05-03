@@ -41,11 +41,11 @@ let mouse =
  */
 const playerColors = 
 [
-    '#333',
-    '#b4b',
-    '#4b0',
-    '#b40',
-    '#04b'
+    'rgb(20,20,20)',
+    'rgb(73,27,73)',
+    'rgb(97,255,0)',
+    'rgb(73,27,0)',
+    'rgb(0,27,73)'
 ];
 
 /**
@@ -69,6 +69,12 @@ const NEUTRAL = 0;
  */
 class Tile
 {
+    /**
+     * Every tile in the game
+     * @param {number} x Actual x coordinate
+     * @param {number} y Actual y coordinate
+     * @param {number} player Index of the player (in the color list (0 for neutral, undefined or -1 for no player there))
+     */
     constructor(x, y, player)
     {
         this._x = x;
@@ -110,20 +116,38 @@ function init(numPlayers)
     for(let i = 0; i < numPlayers; i++)
         player.push(0);
 
-    let mapW = 100, mapH = 100;
-
-    for(let y = 0; y < mapH; y++)
+    console.log('Staging map image...');
+    ImageLib.stageImage('maps/map.png', (img) =>
     {
-        tiles.push([]);
+        console.log('Loading map...');
 
-        for(let x = 0; x < mapW; x++)
+        for(let y = 0; y < img.height; y++)
         {
-            if(Math.random() < .2)
-                tiles[y].push(new Tile(x * DIMENSIONS, y * DIMENSIONS));
-            else
-                tiles[y].push(new Tile(x * DIMENSIONS, y * DIMENSIONS, NEUTRAL));
+            tiles.push([]);
+
+            for(let x = 0; x < img.width; x++)
+            {
+                let pixel = ImageLib.getPixel(x, y);
+                let rgbPattern = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
+                console.log(rgbPattern);
+
+                for(let i = 0; i < playerColors.length; i++)
+                {
+                    if(rgbPattern === playerColors[i])
+                    {
+                        tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
+                        break;
+                    }
+                }
+
+                if(!tiles[y][x])
+                    tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS);
+            }
         }
-    }
+
+        console.log('Done!');
+        draw();
+    });
 }
 
 let downKeys = {};
@@ -136,7 +160,7 @@ window.onmousemove = e =>
     mouse.y = e.y;
 };
 
-window.onload = () =>
+WindowLoadHandler.add(() =>
 {
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
@@ -145,8 +169,7 @@ window.onload = () =>
     canvas.height = h = window.innerHeight;
 
     init();
-    draw();
-};
+});
 
 window.onresize = () =>
 {
