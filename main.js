@@ -167,8 +167,6 @@ WindowLoadHandler.add(() =>
 
     canvas.width = w = window.innerWidth;
     canvas.height = h = window.innerHeight;
-
-    init();
 });
 
 window.onresize = () =>
