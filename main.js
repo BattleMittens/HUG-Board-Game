@@ -149,7 +149,7 @@ function init(numPlayers)
     });
 
     btns.push(
-        new Button('btns/next.png', () => {nextPlayer(); alert('ebic'); }, (btn) =>
+        new Button('btns/next.png', () => {nextPlayer(); }, (btn) =>
         {
             btn.x = w - 100;
             btn.y = h - 100;
@@ -391,7 +391,7 @@ function nextPlayer()
 {
     currentPlayer++;
     if(currentPlayer > 4)
-        currentPlayer++;
+        currentPlayer = 1;
 }
 
 /**
