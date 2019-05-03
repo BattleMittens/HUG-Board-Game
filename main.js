@@ -43,10 +43,12 @@ const playerColors =
 [
     'rgb(20,20,20)',
     'rgb(73,27,73)',
-    'rgb(97,255,0)',
+    'rgb(27,73,0)',
     'rgb(73,27,0)',
     'rgb(0,27,73)'
 ];
+
+console.log(equalWithinRange(20, 25, 5));
 
 /**
  * Stores the dots available to each player (.length is how many players are playing)
@@ -114,13 +116,26 @@ function init(numPlayers)
 {
     players = [];
     for(let i = 0; i < numPlayers; i++)
-        player.push(0);
+        players.push(0);
 
     console.log('Staging map image...');
     ImageLib.stageImage('maps/map.png', (img) =>
     {
         console.log('Loading map...');
 
+        let splitCols = [];
+        playerColors.forEach(c =>
+            {
+                let col = [];
+                let split = c.substring('rgb('.length, c.indexOf(')')).split(',');
+                col.push(Number(split[0]));
+                col.push(Number(split[1]));
+                col.push(Number(split[2]));
+                splitCols.push(col);
+            });
+
+        console.log(splitCols);
+        
         for(let y = 0; y < img.height; y++)
         {
             tiles.push([]);
@@ -128,12 +143,19 @@ function init(numPlayers)
             for(let x = 0; x < img.width; x++)
             {
                 let pixel = ImageLib.getPixel(x, y);
-                let rgbPattern = `rgb(${pixel[0]},${pixel[1]},${pixel[2]})`;
-                console.log(rgbPattern);
-
                 for(let i = 0; i < playerColors.length; i++)
                 {
-                    if(rgbPattern === playerColors[i])
+                    console.log(splitCols[i]);
+                    let j = 0;
+                    for(; j < 3; j++)
+                    {
+                        if(!equalWithinRange(pixel[j], splitCols[i][j], 10))
+                        {
+                            break;
+                        }
+                    }
+
+                    if(j === 4)
                     {
                         tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
                         break;
@@ -176,6 +198,11 @@ window.onresize = () =>
     canvas.width = w = window.innerWidth;
     canvas.height = h = window.innerHeight;
 };
+
+function equalWithinRange(x, y, r)
+{
+    return x - r <= y && x + r >= y;
+}
 
 function tick()
 {
