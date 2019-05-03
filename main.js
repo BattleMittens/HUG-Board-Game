@@ -48,8 +48,6 @@ const playerColors =
     'rgb(0,27,73)'
 ];
 
-console.log(equalWithinRange(20, 25, 5));
-
 /**
  * Stores the dots available to each player (.length is how many players are playing)
  */
@@ -134,8 +132,6 @@ function init(numPlayers)
                 splitCols.push(col);
             });
 
-        console.log(splitCols);
-        
         for(let y = 0; y < img.height; y++)
         {
             tiles.push([]);
@@ -143,24 +139,18 @@ function init(numPlayers)
             for(let x = 0; x < img.width; x++)
             {
                 let pixel = ImageLib.getPixel(x, y);
-                for(let i = 0; i < playerColors.length; i++)
+                for(let i = 0; i < splitCols.length; i++)
                 {
-                    console.log(splitCols[i]);
-                    let j = 0;
-                    for(; j < 3; j++)
-                    {
-                        if(!equalWithinRange(pixel[j], splitCols[i][j], 10))
-                        {
-                            break;
-                        }
-                    }
+                    let c = splitCols[i];
 
-                    if(j === 4)
+                    if( c[0] === pixel[0] &&
+                        c[1] === pixel[1] &&
+                        c[2] === pixel[2])
                     {
                         tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
                         break;
                     }
-                }
+                };
 
                 if(!tiles[y][x])
                     tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS);
@@ -196,11 +186,6 @@ window.onresize = () =>
     canvas.width = w = window.innerWidth;
     canvas.height = h = window.innerHeight;
 };
-
-function equalWithinRange(x, y, r)
-{
-    return x - r <= y && x + r >= y;
-}
 
 function tick()
 {
