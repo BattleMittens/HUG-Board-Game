@@ -33,7 +33,9 @@ let camera =
 let mouse =
 {
     x: 0,
-    y: 0
+    y: 0,
+    down: false,
+    justDown: false
 };
 
 /**
@@ -65,6 +67,11 @@ let currentPlayer = 1;
 const NEUTRAL = 0;
 
 /**
+ * For the gui
+ */
+let btns = [];
+
+/**
  * Every tile in the game
  */
 class Tile
@@ -79,6 +86,7 @@ class Tile
     {
         this._x = x;
         this._y = y;
+        this._dots = Math.round(Math.random() * 20);
 		
 		//Why, why would you ever do this?
         //this._player = player === undefined ? -1 : player;
@@ -88,7 +96,7 @@ class Tile
 		}
 		else
 		{
-			this.player = player;
+			this._player = player;
 		}
     }
 
@@ -103,6 +111,10 @@ class Tile
     set x(x) { this._x = x; }
     set y(y) { this._y = y; }
 
+    set dots(dots) { this._dots = dots; }
+    get dots() { return this._dots; }
+    addDots(d) { this.dots += d; }
+
     get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
 }
 
@@ -112,15 +124,50 @@ class Tile
  */
 function init(numPlayers)
 {
+    canvas = document.getElementById('canvas');
+    ctx = canvas.getContext('2d');
+
+    canvas.width = w = window.innerWidth;
+    canvas.height = h = window.innerHeight;
+
+    ctx.font = "20px Arial";
+
     players = [];
     for(let i = 0; i < numPlayers; i++)
-        players.push(0);
-
-    console.log('Staging map image...');
-    ImageLib.stageImage('maps/map.png', (img) =>
     {
-        console.log('Loading map...');
+        players.push(0);
+    }
 
+    console.log('Loading map...');
+    loadMap('map.png', () =>
+    {
+        console.log('Done!');
+        setInterval(tick, 1000 / 60);
+        draw();
+
+        players[getCurrentPlayer()] = calculateDots(getCurrentPlayer());
+    });
+
+    btns.push(
+        new Button('btns/next.png', () => {nextPlayer(); alert('ebic'); }, (btn) =>
+        {
+            btn.x = w - 100;
+            btn.y = h - 100;
+            btn.width = 50;
+            btn.height = 50;
+        })
+    );
+}
+
+/**
+ * Fills the tiles[][] 2d array from the map image
+ * @param {string} map The map's file name (assumed to be in maps/ directory)
+ * @param {Function} callback Called after the map is done loading
+ */
+function loadMap(map, callback)
+{
+    ImageLib.stageImage(`maps/${map}`, (img) =>
+    {
         let splitCols = [];
         playerColors.forEach(c =>
             {
@@ -157,35 +204,10 @@ function init(numPlayers)
             }
         }
 
-        console.log('Done!');
-        draw();
+        if(callback)
+            callback();
     });
 }
-
-let downKeys = {};
-window.onkeyup = (e) => { downKeys[e.key] = false; }
-window.onkeydown = (e) => { downKeys[e.key] = true; }
-
-window.onmousemove = e =>
-{
-    mouse.x = e.x;
-    mouse.y = e.y;
-};
-
-WindowLoadHandler.add(() =>
-{
-    canvas = document.getElementById('canvas');
-    ctx = canvas.getContext('2d');
-
-    canvas.width = w = window.innerWidth;
-    canvas.height = h = window.innerHeight;
-});
-
-window.onresize = () =>
-{
-    canvas.width = w = window.innerWidth;
-    canvas.height = h = window.innerHeight;
-};
 
 function tick()
 {
@@ -201,26 +223,45 @@ function tick()
 
     camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
     camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
-}
 
-function clamp(v, min, max)
-{
-    if(v < min)
-        return min;
-    if(v > max)
-        return max;
+    let guiElementOver = null;
+    btns.forEach(b =>
+        {
+            if(b.isWithin(mouse.x, mouse.y))
+            {
+                guiElementOver = b;
+                return;
+            }
+        });
+    
+    if(guiElementOver)
+    {
+        if(mouse.justDown)
+        {
+            guiElementOver.onclick();
+        }
+    }
 
-    return v;
+    mouse.justDown = false;
 }
 
 function draw()
 {
     requestAnimationFrame(draw);
-    tick();
 
     ctx.clearRect(0, 0, w, h);
 
     let tileOver = getTileMouseOver();
+
+    let guiElementOver = null;
+    btns.forEach(b =>
+        {
+            if(b.isWithin(mouse.x, mouse.y))
+            {
+                guiElementOver = b;
+                return;
+            }
+        });
 
     for(let y = Math.floor(camera.y / DIMENSIONS); y < (camera.y + h) / DIMENSIONS; y++)
     {
@@ -234,17 +275,131 @@ function draw()
             ctx.fillStyle = tile.color;
             ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
 
-            // Shows the user what tile they're hovering over
-            if(tile.moveable && tileOver === tile)
+            if(!guiElementOver)
             {
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+               // Shows the user what tile they're hovering over
+                if(tile.moveable && tileOver === tile)
+                {
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                    ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+                }
             }
 
             ctx.fillStyle = 'black';
             ctx.strokeRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+
+            if(tile.dots > 0)
+            {
+                let subAmt = ~~Math.round(tile.dots / 20 * 255);
+
+                if(tile.player === getCurrentPlayer())
+                    ctx.fillStyle = `rgb(${255 - subAmt}, 255, ${255 - subAmt})`;
+                else
+                    ctx.fillStyle = `rgb(255, ${255 - subAmt}, ${255 - subAmt})`;
+
+                ctx.fillText(tile.dots, drawX - ctx.measureText(tile.dots).width / 2 + DIMENSIONS / 2, drawY + DIMENSIONS / 2 + 8)
+            }
         }
     }
+
+    btns.forEach(b =>
+    {
+        if(b.ready)
+        {
+            ctx.drawImage(b.sprite, b.x, b.y, b.width, b.height);
+            if(guiElementOver === b)
+            {
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+                ctx.fillRect(b.x, b.y, b.width, b.height);
+            }
+        }
+    });
+}
+
+class Button
+{
+    constructor(sprite, onclick, onresize)
+    {
+        this._x = undefined;
+        this._y = undefined;
+        this._width = undefined;
+        this._height = undefined;
+
+        this._sprite = new Image();
+        this._sprite.src = `images/${sprite}`;
+        this._sprite.onload = () => { this._ready = true; this.onresize(this) };
+        this._onclick = onclick;
+        this._ready = false;
+
+        if(!onresize)
+            this._onresize = () => {};
+        else
+            this._onresize = onresize;
+    }
+
+    isWithin(x, y)
+    {
+        return this.x <= x && this.x + this.width >= x && this.y <= y && this.y + this.height >= y;
+    }
+
+    get ready() { return this._ready; }
+
+    get height() { return this._height; }
+    set height(height) { this._height = height; }
+
+    get onclick() { return this._onclick; }
+    set onclick(onclick) { this._onclick = onclick; }
+
+    get sprite() { return this._sprite; }
+    set sprite(sprite) { this._sprite = sprite; }
+
+    get x() { return this._x; }
+    set x(x) { this._x = x; }
+
+    get y() { return this._y; }
+    set y(y) { this._y = y; }
+
+    get width() { return this._width; }
+    set width(width) { this._width = width; }
+
+    get onresize() { return this._onresize; }
+    set onresize(onresize) { this._onresize = onresize; }
+}
+
+/**
+ * How many dots to reward the given player this turn (this will not add their previous dots)
+ * @param {number} playerNum The index of the player
+ */
+function calculateDots(playerNum)
+{
+    let pts = 0;
+    tiles.forEach(tilesArr =>
+        {
+            tilesArr.forEach(t =>
+                {
+                    pts += t.player === playerNum ? 1 : 0;
+                });
+        });
+    
+    return Math.round(Math.log(pts * 10));
+}
+
+/**
+ * Cycles over to the next player
+ */
+function nextPlayer()
+{
+    currentPlayer++;
+    if(currentPlayer > 4)
+        currentPlayer++;
+}
+
+/**
+ * Gets the index of the current player
+ */
+function getCurrentPlayer()
+{
+    return currentPlayer;
 }
 
 /**
@@ -260,3 +415,49 @@ function getTileMouseOver()
 
     return tiles[iY][iX];
 }
+
+
+//// UTIL STUFF
+
+let downKeys = {};
+window.onkeyup = (e) => { downKeys[e.key] = false; }
+window.onkeydown = (e) => { downKeys[e.key] = true; }
+
+
+function clamp(v, min, max)
+{
+    if(v < min)
+        return min;
+    if(v > max)
+        return max;
+
+    return v;
+}
+
+window.onmousemove = e =>
+{
+    mouse.x = e.x;
+    mouse.y = e.y;
+};
+
+window.onresize = () =>
+{
+    canvas.width = w = window.innerWidth;
+    canvas.height = h = window.innerHeight;
+
+    btns.forEach(b => b.onresize(b));
+
+    ctx.font = "20px Arial";
+};
+
+window.onmousedown = e =>
+{
+    mouse.down = true;
+    mouse.justDown = true;
+};
+
+window.onmouseup = e =>
+{
+    mouse.down = false;
+    mouse.justDown = false;
+};
