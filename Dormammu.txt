@@ -30,6 +30,4 @@ Industry and Economy (9, 10):
 
 Cities (11):
 
-Religion (5):
-
-Language (5):
+Religion and Language (5):
