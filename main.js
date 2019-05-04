@@ -71,6 +71,8 @@ const NEUTRAL = 0;
  */
 let btns = [];
 
+let paused = false;
+
 /**
  * Every tile in the game
  */
@@ -132,6 +134,8 @@ function init(numPlayers)
 
     ctx.font = "20px Arial";
 
+    registerWindowEvents();
+
     for(let i = 0; i <= numPlayers; i++)
     {
         players.push(0);
@@ -148,7 +152,7 @@ function init(numPlayers)
     });
 
     btns.push(
-        new Button('btns/next.png', () => {nextPlayer(); }, (btn) =>
+        new Button('btns/next.png', () => { nextPlayer(); }, (btn) =>
         {
             btn.x = w - 150;
             btn.y = h - 150;
@@ -217,34 +221,37 @@ function loadMap(map, numPlayers, callback)
 
 function tick()
 {
-    // Key codes https://keycode.info/
-    if(downKeys['ArrowLeft'] || downKeys['a'])
-        camera.x -= 5;
-    if(downKeys['ArrowRight'] || downKeys['d'])
-        camera.x += 5;
-    if(downKeys['ArrowUp'] || downKeys['w'])
-        camera.y -= 5;
-    if(downKeys['ArrowDown'] || downKeys['s'])
-        camera.y += 5;
-
-    camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
-    camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
-
-    let guiElementOver = null;
-    btns.forEach(b =>
-        {
-            if(b.isWithin(mouse.x, mouse.y))
-            {
-                guiElementOver = b;
-                return;
-            }
-        });
-    
-    if(guiElementOver)
+    if(!paused)
     {
-        if(mouse.justDown)
+        // Key codes https://keycode.info/
+        if(downKeys['ArrowLeft'] || downKeys['a'])
+            camera.x -= 5;
+        if(downKeys['ArrowRight'] || downKeys['d'])
+            camera.x += 5;
+        if(downKeys['ArrowUp'] || downKeys['w'])
+            camera.y -= 5;
+        if(downKeys['ArrowDown'] || downKeys['s'])
+            camera.y += 5;
+
+        camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
+        camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
+
+        let guiElementOver = null;
+        btns.forEach(b =>
+            {
+                if(b.isWithin(mouse.x, mouse.y))
+                {
+                    guiElementOver = b;
+                    return;
+                }
+            });
+        
+        if(guiElementOver)
         {
-            guiElementOver.onclick();
+            if(mouse.justDown)
+            {
+                guiElementOver.onclick();
+            }
         }
     }
 
@@ -284,7 +291,7 @@ function draw()
             if(!guiElementOver)
             {
                // Shows the user what tile they're hovering over
-                if(tile.moveable && tileOver === tile)
+                if(!paused && tile.moveable && tileOver === tile)
                 {
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
                     ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
@@ -313,7 +320,7 @@ function draw()
         if(b.ready)
         {
             ctx.drawImage(b.sprite, b.x, b.y, b.width, b.height);
-            if(guiElementOver === b)
+            if(!paused && guiElementOver === b)
             {
                 ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
                 ctx.fillRect(b.x, b.y, b.width, b.height);
@@ -333,7 +340,7 @@ function draw()
  * How many dots to reward the given player this turn (this will not add their previous dots)
  * @param {number} playerNum The index of the player
  */
-function calculateDots(playerNum)
+async function calculateDots(playerNum)
 {
     let pts = 0;
     tiles.forEach(tilesArr =>
@@ -344,19 +351,58 @@ function calculateDots(playerNum)
                 });
         });
     
-    return Math.round(Math.log(pts * 10));
+    let correct = await askQuestion(nextQuestion());
+    
+    let base = Math.log(pts * 10);
+    return Math.round(correct ? base : base / Math.log(pts));
+}
+
+async function askQuestion(question)
+{
+    pauseTicking(true);
+
+    document.getElementById('player').innerHTML = 'Player ' + getCurrentPlayer();
+    document.getElementById('player').style.color = 'rgb(' + getPlayerColor() + ')';
+    document.getElementById('question-prompt').style.display = 'inline-block';
+    document.getElementById('question').innerHTML = question.question;
+    document.getElementById('answer-a').innerHTML = question.a;
+    document.getElementById('answer-b').innerHTML = question.b;
+    document.getElementById('answer-c').innerHTML = question.c;
+    document.getElementById('answer-d').innerHTML = question.d;
+    
+    let correct;
+
+    await new Promise(resolve =>
+        {
+            document.getElementById('btn-a').onclick = () => resolve(false);
+            document.getElementById('btn-b').onclick = () => resolve(false);
+            document.getElementById('btn-c').onclick = () => resolve(false);
+            document.getElementById('btn-d').onclick = () => resolve(false);
+
+            document.getElementById('btn-' + question.correct).onclick = () => resolve(true);
+        }).then(res => correct = res);
+    
+    document.getElementById('question-prompt').style.display = 'none';
+
+    pauseTicking(false);
+    return correct;
 }
 
 /**
  * Cycles over to the next player
  */
-function nextPlayer()
+async function nextPlayer()
 {
     currentPlayer++;
     if(players[currentPlayer] === undefined) // Max player reached
         currentPlayer = 1;
 
-    players[currentPlayer] += calculateDots(currentPlayer);
+    players[currentPlayer] += await calculateDots(currentPlayer);
+}
+
+function pauseTicking(p)
+{
+    paused = p;
 }
 
 function getDots()
@@ -444,9 +490,40 @@ class Button
 //// UTIL STUFF
 
 let downKeys = {};
-window.onkeyup = (e) => { downKeys[e.key] = false; }
-window.onkeydown = (e) => { downKeys[e.key] = true; }
 
+function registerWindowEvents()
+{
+    window.onkeyup = (e) => { downKeys[e.key] = false; }
+    window.onkeydown = (e) => { downKeys[e.key] = true; }
+
+    window.onmousemove = e =>
+    {
+        mouse.x = e.x;
+        mouse.y = e.y;
+    };
+
+    window.onresize = () =>
+    {
+        canvas.width = w = window.innerWidth;
+        canvas.height = h = window.innerHeight;
+
+        btns.forEach(b => b.onresize(b));
+
+        ctx.font = "20px Arial";
+    };
+
+    window.onmousedown = e =>
+    {
+        mouse.down = true;
+        mouse.justDown = true;
+    };
+
+    window.onmouseup = e =>
+    {
+        mouse.down = false;
+        mouse.justDown = false;
+    };
+}
 
 function clamp(v, min, max)
 {
@@ -457,31 +534,3 @@ function clamp(v, min, max)
 
     return v;
 }
-
-window.onmousemove = e =>
-{
-    mouse.x = e.x;
-    mouse.y = e.y;
-};
-
-window.onresize = () =>
-{
-    canvas.width = w = window.innerWidth;
-    canvas.height = h = window.innerHeight;
-
-    btns.forEach(b => b.onresize(b));
-
-    ctx.font = "20px Arial";
-};
-
-window.onmousedown = e =>
-{
-    mouse.down = true;
-    mouse.justDown = true;
-};
-
-window.onmouseup = e =>
-{
-    mouse.down = false;
-    mouse.justDown = false;
-};

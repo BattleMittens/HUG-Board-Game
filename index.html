@@ -23,16 +23,34 @@
                 By taking away a space from an enemy and gaining your own you become much closer to DOMINATION!</p>
 
             <div class = "button">
-                    <button type="button" onclick=
-                    "
-                    init(prompt('How many players are there? (Enter a positive whole number)', '4'));
-                    document.getElementById('pandas').style.display = 'none';
-                    document.getElementById('canvas').style.display = 'inline-block';
-                    "
-                    > Click This When You're Ready To Move On!</button>
-                </div>
+                <button type="button" onclick=
+                "
+                init(prompt('How many players are there? (Enter a positive whole number)', '4'));
+                document.getElementById('pandas').style.display = 'none';
+                document.getElementById('canvas').style.display = 'inline-block';
+                "
+                > Click This When You're Ready To Move On!</button>
+            </div>
             
         </div>
-       <canvas style="display: none;" id="canvas"></canvas>
+        <canvas style="display: none;" id="canvas"></canvas>
+
+        <div id="question-prompt" class="question-prompt" style="display: none">
+            <div class="inner">
+                <h1 id="player"></h1>
+                <h2 id="question"></h2>
+                <p id="answer-a"></p>
+                <p id="answer-b"></p>
+                <p id="answer-c"></p>
+                <p id="answer-d"></p>
+
+                <div class="question-buttons">
+                    <div><button id="btn-a">A</button></div>
+                    <div><button id="btn-b">B</button></div>
+                    <div><button id="btn-c">C</button></div>
+                    <div><button id="btn-d">D</button></div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

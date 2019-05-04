@@ -74,3 +74,90 @@ button
     padding-bottom: 50px;
     padding-right: 50px;
 }
+
+.question-prompt
+{
+    position: absolute;
+    width: 80%;
+    min-height: 80%;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10%;
+}
+
+.inner
+{
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+.question-buttons
+{
+    padding: 50px;
+    width: calc(100% - 20px);
+    display: grid;
+    grid-gap: 0 20px;
+    padding: 10px;
+    grid-template-columns: auto auto;
+}
+
+.question-buttons div
+{
+    text-align: center;
+    padding: 20px 0;
+    font-size: 24px;
+    width: 100%;
+}
+
+.question-buttons div button
+{
+    background-color: #08f;
+    color: white;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.question-buttons div button:hover
+{
+    background-color: #2af;
+}
+
+h2
+{
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+#answer-a::before
+{
+    content: 'A) ';
+}
+
+#answer-b::before
+{
+    content: 'B) ';
+}
+
+#answer-c::before
+{
+    content: 'C) ';
+}
+
+#answer-d::before
+{
+    content: 'D) ';
+}
+
+.question-buttons
+{
+    margin-top: 20px;
+}
+
+.question-prompt h1
+{
+    text-align: center;
+    font-size: 3.6em;
+}
