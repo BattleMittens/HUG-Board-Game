@@ -178,8 +178,6 @@ function loadMap(map, numPlayers, callback)
                 splitCols.push(col);
             });
 
-        console.log(splitCols)
-
         for(let y = 0; y < img.height; y++)
         {
             tiles.push([]);
