@@ -43,11 +43,11 @@ let mouse =
  */
 const playerColors = 
 [
-    'rgb(20,20,20)',
-    'rgb(73,27,73)',
-    'rgb(27,73,0)',
-    'rgb(73,27,0)',
-    'rgb(0,27,73)'
+    '20,20,20',
+    '73,27,73',
+    '27,73,0',
+    '73,27,0',
+    '0,27,73'
 ];
 
 /**
@@ -86,7 +86,7 @@ class Tile
     {
         this._x = x;
         this._y = y;
-        this._dots = Math.round(Math.random() * 20);
+        this._dots = 0;
 		
 		//Why, why would you ever do this?
         //this._player = player === undefined ? -1 : player;
@@ -132,29 +132,28 @@ function init(numPlayers)
 
     ctx.font = "20px Arial";
 
-    players = [];
-    for(let i = 0; i < numPlayers; i++)
+    for(let i = 0; i <= numPlayers; i++)
     {
         players.push(0);
     }
 
-    console.log('Loading map...');
-    loadMap('map.png', () =>
+    loadMap('map.png', numPlayers, () =>
     {
-        console.log('Done!');
         setInterval(tick, 1000 / 60);
         draw();
 
-        players[getCurrentPlayer()] = calculateDots(getCurrentPlayer());
+        // Start off with player 1 (next player iterates current player by 1)
+        currentPlayer = 0;
+        nextPlayer();
     });
 
     btns.push(
         new Button('btns/next.png', () => {nextPlayer(); }, (btn) =>
         {
-            btn.x = w - 100;
-            btn.y = h - 100;
-            btn.width = 50;
-            btn.height = 50;
+            btn.x = w - 150;
+            btn.y = h - 150;
+            btn.width = 100;
+            btn.height = 100;
         })
     );
 }
@@ -164,7 +163,7 @@ function init(numPlayers)
  * @param {string} map The map's file name (assumed to be in maps/ directory)
  * @param {Function} callback Called after the map is done loading
  */
-function loadMap(map, callback)
+function loadMap(map, numPlayers, callback)
 {
     ImageLib.stageImage(`maps/${map}`, (img) =>
     {
@@ -172,12 +171,14 @@ function loadMap(map, callback)
         playerColors.forEach(c =>
             {
                 let col = [];
-                let split = c.substring('rgb('.length, c.indexOf(')')).split(',');
+                let split = c.split(',');
                 col.push(Number(split[0]));
                 col.push(Number(split[1]));
                 col.push(Number(split[2]));
                 splitCols.push(col);
             });
+
+        console.log(splitCols)
 
         for(let y = 0; y < img.height; y++)
         {
@@ -194,7 +195,14 @@ function loadMap(map, callback)
                         c[1] === pixel[1] &&
                         c[2] === pixel[2])
                     {
-                        tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
+                        if(i <= numPlayers)
+                        {
+                            tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
+                            if(i !== NEUTRAL)
+                                tiles[y][x].dots = 3;
+                        }
+                        else
+                            tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, NEUTRAL);
                         break;
                     }
                 };
@@ -272,7 +280,7 @@ function draw()
             let drawX = tile.x - camera.x;
             let drawY = tile.y - camera.y;
 
-            ctx.fillStyle = tile.color;
+            ctx.fillStyle = `rgb(${tile.color})`;
             ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
 
             if(!guiElementOver)
@@ -290,7 +298,7 @@ function draw()
 
             if(tile.dots > 0)
             {
-                let subAmt = ~~Math.round(tile.dots / 20 * 255);
+                let subAmt = ~~Math.round(tile.dots / 10 * 255);
 
                 if(tile.player === getCurrentPlayer())
                     ctx.fillStyle = `rgb(${255 - subAmt}, 255, ${255 - subAmt})`;
@@ -314,6 +322,75 @@ function draw()
             }
         }
     });
+    
+    ctx.fillStyle = `rgba(${getPlayerColor()},0.8)`;
+    ctx.fillRect(w / 2 - 60, 32 - 25, 120, 50);
+
+    let text = `${getDots()} dot${getDots() === 1 ? '' : 's'}`;
+    ctx.fillStyle = 'white';
+    ctx.fillText(text, w / 2 - ctx.measureText(text).width / 2, 32 * 2 - 25);
+}
+
+/**
+ * How many dots to reward the given player this turn (this will not add their previous dots)
+ * @param {number} playerNum The index of the player
+ */
+function calculateDots(playerNum)
+{
+    let pts = 0;
+    tiles.forEach(tilesArr =>
+        {
+            tilesArr.forEach(t =>
+                {
+                    pts += t.player === playerNum ? 1 : 0;
+                });
+        });
+    
+    return Math.round(Math.log(pts * 10));
+}
+
+/**
+ * Cycles over to the next player
+ */
+function nextPlayer()
+{
+    currentPlayer++;
+    if(players[currentPlayer] === undefined) // Max player reached
+        currentPlayer = 1;
+
+    players[currentPlayer] += calculateDots(currentPlayer);
+}
+
+function getDots()
+{
+    return players[getCurrentPlayer()];
+}
+
+/**
+ * Gets the index of the current player
+ */
+function getCurrentPlayer()
+{
+    return currentPlayer;
+}
+
+function getPlayerColor()
+{
+    return playerColors[getCurrentPlayer()];
+}
+
+/**
+ * Gets the tile the mouse is over, or null if it isn't over any tile
+ */
+function getTileMouseOver()
+{
+    if(mouse.x < 0 || mouse.x > w || mouse.y < 0 || mouse.y > h)
+        return null;
+
+    let iX = Math.floor((mouse.x + camera.x) / DIMENSIONS);
+    let iY = Math.floor((mouse.y + camera.y) / DIMENSIONS);
+
+    return tiles[iY][iX];
 }
 
 class Button
@@ -365,57 +442,6 @@ class Button
     get onresize() { return this._onresize; }
     set onresize(onresize) { this._onresize = onresize; }
 }
-
-/**
- * How many dots to reward the given player this turn (this will not add their previous dots)
- * @param {number} playerNum The index of the player
- */
-function calculateDots(playerNum)
-{
-    let pts = 0;
-    tiles.forEach(tilesArr =>
-        {
-            tilesArr.forEach(t =>
-                {
-                    pts += t.player === playerNum ? 1 : 0;
-                });
-        });
-    
-    return Math.round(Math.log(pts * 10));
-}
-
-/**
- * Cycles over to the next player
- */
-function nextPlayer()
-{
-    currentPlayer++;
-    if(currentPlayer > 4)
-        currentPlayer = 1;
-}
-
-/**
- * Gets the index of the current player
- */
-function getCurrentPlayer()
-{
-    return currentPlayer;
-}
-
-/**
- * Gets the tile the mouse is over, or null if it isn't over any tile
- */
-function getTileMouseOver()
-{
-    if(mouse.x < 0 || mouse.x > w || mouse.y < 0 || mouse.y > h)
-        return null;
-
-    let iX = Math.floor((mouse.x + camera.x) / DIMENSIONS);
-    let iY = Math.floor((mouse.y + camera.y) / DIMENSIONS);
-
-    return tiles[iY][iX];
-}
-
 
 //// UTIL STUFF
 
