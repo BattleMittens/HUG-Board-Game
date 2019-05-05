@@ -1,4 +1,4 @@
-Geography (1):
+Geography (1): 8
 
 What is the name of the meridian at zero degrees longitude?
 Prime Meridian
@@ -17,6 +17,14 @@ Globalization
 
 What is the term for the geographic distribution of objects in space?
 Pattern
+
+What is a simplified abstraction of reality that is structured to clarify casual relationships?
+Model
+
+These three components (data storage capability, compuer graphics and programs, and statistical packages)  are from what?
+GIS, Geographic Information System
+
+
 
 Population (4):
 
