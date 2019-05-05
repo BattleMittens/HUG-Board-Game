@@ -115,7 +115,22 @@ class Tile
 
     set dots(dots) { this._dots = dots; }
     get dots() { return this._dots; }
-    addDots(d) { this.dots += d; }
+    addDots(d, p)
+    {
+        if(p === this.player)
+            this.dots += d;
+        else
+        {
+            this.dots -= d;
+            if(this.dots < 0)
+            {
+                this.dots *= -1;
+                return true;
+            }
+        }
+
+        return false;
+    }
 
     get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
 }
@@ -219,7 +234,7 @@ function loadMap(map, numPlayers, callback)
     });
 }
 
-function tick()
+async function tick()
 {
     if(!paused)
     {
@@ -246,11 +261,36 @@ function tick()
                 }
             });
         
-        if(guiElementOver)
+        if(mouse.justDown)
         {
-            if(mouse.justDown)
+            if(guiElementOver)
             {
                 guiElementOver.onclick();
+            }
+            else
+            {
+                let t = getTileMouseOver();
+                if(isAdjacent(t.x / DIMENSIONS, t.y / DIMENSIONS, getCurrentPlayer()))
+                {
+                    if(getDots() > 0)
+                    {
+                        if(t.addDots(1, getCurrentPlayer()))
+                        {
+                            if(t.player !== NEUTRAL)
+                            {
+                                let correct = await askQuestion(nextQuestion());
+                                if(correct)
+                                    t.player = getCurrentPlayer();
+                                else
+                                    t.dots = 0;
+                            }
+                            else
+                                t.player = getCurrentPlayer();
+                        }
+
+                        removeDots(1);
+                    }
+                }
             }
         }
     }
@@ -288,14 +328,19 @@ function draw()
             ctx.fillStyle = `rgb(${tile.color})`;
             ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
 
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
             if(!guiElementOver)
             {
-               // Shows the user what tile they're hovering over
+                // Shows the user what tile they're hovering over
                 if(!paused && tile.moveable && tileOver === tile)
                 {
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
                     ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
                 }
+            }
+
+            if(getDots() > 0 && tile.player !== getCurrentPlayer() && isAdjacent(x, y, getCurrentPlayer()))
+            {
+                ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
             }
 
             ctx.fillStyle = 'black';
@@ -334,6 +379,28 @@ function draw()
     let text = `${getDots()} dot${getDots() === 1 ? '' : 's'}`;
     ctx.fillStyle = 'white';
     ctx.fillText(text, w / 2 - ctx.measureText(text).width / 2, 32 * 2 - 25);
+}
+
+function isAdjacent(x, y, player)
+{
+    for(let dx = -1; dx <= 1; dx++)
+    {
+        for(let dy = -1; dy <= 1; dy++)
+        {
+            if(dy + y >= 0 && dy + y < tiles.length)
+            {
+                if(dx + x >= 0 && dx + x < tiles[dy + y].length)
+                {
+                    if(tiles[dy + y][dx + x].player === player)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
 /**
@@ -408,6 +475,11 @@ function pauseTicking(p)
 function getDots()
 {
     return players[getCurrentPlayer()];
+}
+
+function removeDots(amt)
+{
+    players[getCurrentPlayer()] -= amt;
 }
 
 /**
