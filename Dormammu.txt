@@ -1,33 +1,652 @@
 Geography (1):
+[
+    {
+        question: 'What is the name of the meridian at zero degrees longitude',
+        a: 'Greenwich Meridian',
+        b: 'Prime Meridian',
+        c: 'Mental Meridian',
+        d: 'Consecutive Meridian',
+        correct: 'b'
+    },
+    {
+        question: 'What is the name of the parallel at zero degrees latitude?',
+        a: 'Inquisitor',
+        b: 'Prime Meridian',
+        c: 'Equator',
+        d: 'Ecuador',
+        correct: 'c'
+    },
+    {
+        question: 'What is the standard basis of the time zone system and the time centered at zero degrees longitude?',
+        a: 'Eurpoean Time',
+        b: 'East Time',
+        c: 'Korean Time',
+        d: 'Greenwich Mean Time',
+        correct: 'd'
+    },
+    {
+        question: 'What is the quantity of something compared to the area it takes up?',
+        a: 'Dispersion',
+        b: 'Compression',
+        c: 'Density',
+        d: 'Scale',
+        correct: 'c'
+    },
+    {
+        question: 'What is the term for the increase of interconnectivity between all parts of the world?',
+        a: 'Connection',
+        b: 'Globalization',
+        c: 'Relation',
+        d: 'Equality',
+        correct: 'b'
+    },
+    {
+        question: 'What is the term for the geographic distribution of objects in space?',
+        a: 'Dispersion',
+        b: 'Pattern',
+        c: 'Scale',
+        d: 'Orinetation',
+        correct: 'b'
+    },
+    {
+        question: 'What is a simplified abstraction of reality that is structured to clarify casual relationships?',
+        a: 'Model',
+        b: 'Map',
+        c: 'Diagram',
+        d: 'Impersonation',
+        correct: 'a'
+    },
+    {
+        question: 'These three components (data storage capability, compuer graphics and programs, and statistical packages)  are from what?',
+        a: 'GIS,
+        b: 'Geographic Information System'',
+        c: 'Geographic Information Setup',
+        d: 'GES',
+        correct: 'a,b'
+    },
+    {
+        question: 'What map records actual numbers or occurrances of the mapped item per established unit are or location?',
+        a: 'Choropleth',
+        b: 'Cartogram',
+        c: 'Statistical',
+        d: 'Isopleth',
+        correct: 'c'
+    },
+    {
+        question: 'Which region is essentially unifyom in one or a limited combination of physical or cultural features?',
+        a: 'Formal',
+        b: 'Uniform',
+        c: 'Functional',
+        d: 'Perceptual',
+        correct: 'a,b'
+    }
 
-What is the name of the meridian at zero degrees longitude?
-Prime Meridian
-
-What is the name of the parallel at zero degrees latitude?
-Equator
-
-What is the standard basis of the time zone system and the time centered at zero degrees longitude?
-Greenwich Mean Time
-
-What is the quantity of something compared to the area it takes up?
-Density
-
-What is the term for the increase of interconnectivity between all parts of the world?
-Globalization
-
-What is the term for the geographic distribution of objects in space?
-Pattern
 
 Population (4):
-
+    {
+        question: 'Where will the majority of LDC population be in 2050?',
+        a: 'Sub-Saharan Africa',
+        b: 'Latin America',
+        c: 'China',
+        d: 'Other Asia / Oceania',
+        correct: 'd'
+    },
+    {
+        question: 'Africa is estimated to contribute what % of population growth from 2000 to 2050?',
+        a: '33.6',
+        b: '33.7',
+        c: '33.5',
+        d: '34.0',
+        correct: 'a'
+    },
+    {
+        question: 'What continent has the highest percentage of their population under 15 years of age?',
+        a: 'South America',
+        b: 'Asia',
+        c: 'Africa',
+        d: 'Europe',
+        correct: 'c'
+    },
+    {
+        question: 'What is the time is takes for a population to double its amount?',
+        a: 'Squaring Time',
+        b: 'Doubling Time',
+        c: '2x Time',
+        d: 'Population Doubling Time',
+        correct: 'b'
+    },
+    {
+        question: 'How long does it take an annual increase of 10.0% to double?',
+        a: '7 Years',
+        b: '8 Years',
+        c: '6 Years',
+        d: '5 Years',
+        correct: 'a'
+    },
+    {
+        question: 'What is the model which attempts to summarize the relationship between population growth and econcomic development?',
+        a: 'TDM',
+        b: 'DTM',
+        c: 'DMT',
+        d: 'Demographic Transition Model',
+        correct: 'b,d'
+    },
+    {
+        question: 'At which stage of the DTM are CBR and CDR the furthest apart?',
+        a: '1',
+        b: '2',
+        c: '3',
+        d: '4',
+        correct: 'b'
+    },
+    {
+        question: 'What latitude has the highest population percentage?',
+        a: '40->50',
+        b: '30->40',
+        c: '20->30',
+        d: '10->20',
+        correct: 'c'
+    },
+    {
+        question: 'What country has the highest population density per square mile? (2552)',
+        a: 'Bangladesh',
+        b: 'Argentina',
+        c: 'Nigeria',
+        d: 'China',
+        correct: 'a'
+    },
+    {
+        question: 'What keeps population growing even when a fertility rate drops below zero?',
+        a: 'Fertility Rate Theory',
+        b: 'Population Momentum',
+        c: 'It doesn't',
+        d: 'Crude Birth Rate',
+        correct: 'b'
+    }
 Culture (2, 5, 6, 7):
-
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
 Political Organizations (3, 12):
-
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
 Agriculture (8):
-
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
 Industry and Economy (9, 10):
-
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
 Cities (11):
-
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
 Religion and Language (5):
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    },
+    {
+        question: '',
+        a: '',
+        b: '',
+        c: '',
+        d: '',
+        correct: ''
+    }
+]

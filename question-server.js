@@ -11,11 +11,8 @@
  */
 function nextQuestion()
 {
-    // blah blah blah
-    // some logic to get me a question
-    // I don't really care how it works just get me a question
-
     let question =
+    //first question
     {
         question: 'What was the year Jamestown was founded?',
         a: '1607',
