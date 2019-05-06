@@ -163,7 +163,7 @@ Population (4):
         d: 'Crude Birth Rate',
         correct: 'b'
     }
-Culture (2, 5, 6, 7):
+Culture (2, 6, 7):
     {
         question: 'In what period did humans start producing food rather than gathering it?',
         a: 'Neolithic',
@@ -181,52 +181,52 @@ Culture (2, 5, 6, 7):
         correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which form of diffusion involves the spread of an underlying idea?',
+        a: 'Expansion',
+        b: 'Stimulus',
+        c: 'Relocation',
+        d: 'Hierarchical',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Mountains and oceans are examples of which of the following?',
+        a: 'Causes of friction of distance',
+        b: 'Absorbing barriers',
+        c: 'Causes of time-distance decay',
+        d: 'Interupting barriers',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The process of fusion between the old and the new is called',
+        a: 'Acculturation',
+        b: 'Syncretism',
+        c: 'Assimilation',
+        d: 'Transculturation',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Ethnocentrism is',
+        a: 'Judging other cultures based on your own',
+        b: 'Placing ethnic groups in the inner city',
+        c: 'Holding ethnicity as a major societal value',
+        d: 'Discriminating against people of a different race',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The two major groups of first-wave immigration to the US were',
+        a: 'Northern and Western Europeans',
+        b: 'Europeans and Asians',
+        c: 'Europeans and Africans',
+        d: 'Europeans and Latin Americans',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Amalgamation Theory is the idea of the US as a',
+        a: 'Cradle for democracy',
+        b: 'Place where all ethnicities coexist',
+        c: 'Melting pot',
+        d: 'Place where people value culture above all else',
+        correct: 'c'
     },
     {
         question: '',
