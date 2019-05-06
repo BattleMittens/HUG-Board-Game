@@ -230,9 +230,6 @@ function loadMap(map, numPlayers, callback)
                 {
                     let c = splitCols[i];
                     
-                    if(pixel[3] !== 255)
-                        console.log(pixel);
-
                     if( within(c[0], pixel[0], 10) &&
                         within(c[1], pixel[1], 10) &&
                         within(c[2], pixel[2], 10))
@@ -517,7 +514,11 @@ async function askQuestion(question)
             document.getElementById('btn-c').onclick = () => resolve(false);
             document.getElementById('btn-d').onclick = () => resolve(false);
 
-            document.getElementById('btn-' + question.correct).onclick = () => resolve(true);
+            question.correct.split(',').forEach(correct =>
+            {
+                document.getElementById('btn-' + correct).onclick = () => resolve(true);
+            });
+
         }).then(res => correct = res);
     
     document.getElementById('question-prompt').style.display = 'none';

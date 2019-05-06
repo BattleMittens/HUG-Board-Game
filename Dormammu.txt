@@ -570,52 +570,52 @@ Cities (11):
     }
 Religion and Language (5):
     {
-        question: '',
-        a: '',
-        b: '',
+        question: 'Which is an example of a univeralizing religion?',
+        a: 'Buddhism',
+        b: 'Hinduism',
+        c: 'Sikhism',
+        d: 'Judaism',
+        correct: 'a'
+    },
+    {
+        question: 'Which religion has 5 pillars?',
+        a: 'Christianity',
+        b: 'Confucianism',
+        c: 'Islam',
+        d: 'Hinduism',
+        correct: 'c'
+    },
+    {
+        question: 'Which religion has the 5 Ks',
+        a: 'Kami',
+        b: 'Sikhism',
+        c: 'Daoism',
+        d: 'Animism',
+        correct: 'b'
+    },
+    {
+        question: 'Which religion is common in Japan? (hint: ends in "ism")',
+        a: 'Buddhism',
+        b: 'Daoism',
+        c: 'Taoism',
+        d: 'Shintoism',
+        correct: 'a,d'
+    },
+    {
+        question: 'Which religion spread through much military action?',
+        a: 'Shintoism',
+        b: 'Vodou',
         c: '',
         d: '',
         correct: ''
     },
     {
-        question: '',
-        a: '',
-        b: '',
+        question: 'A form of Animism',
+        a: 'Vodou',
+        b: 'Christianity',
         c: '',
         d: '',
-        correct: ''
-    },
-    {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
-    },
-    {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
-    },
-    {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
-    },
-    {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        correct: 'a'
     },
     {
         question: '',
