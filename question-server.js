@@ -1,4 +1,17 @@
+let questions = [];
 
+fetch('Dormammu.json')
+    .then((res) =>
+    {
+        return res.json();
+    })
+    .then((json) =>
+    {
+        questions = json;
+    });
+
+
+    
 /**
  * Gives a random question to answer
  * Make sure it returns an object with the properties
@@ -11,16 +24,15 @@
  */
 function nextQuestion()
 {
-    let question =
-    //first question
+    if(questions.length === 0)
     {
-        question: 'What was the year Jamestown was founded?',
-        a: '1607',
-        b: '1812',
-        c: '1600',
-        d: '1774',
-        correct: 'a'
+        questions = oldQuestions;
+        oldQuestions = [];
     }
 
-    return question;
+    let i = ~~Math.round(Math.random() * questions.length);
+    oldQuestions.push(questions[i]);
+    return questions.splice(i, 1)[0];
 }
+
+let oldQuestions = [];

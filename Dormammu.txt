@@ -605,9 +605,9 @@ Religion and Language (5):
         question: 'Which religion spread through much military action?',
         a: 'Shintoism',
         b: 'Vodou',
-        c: '',
-        d: '',
-        correct: ''
+        c: 'Islam',
+        d: 'Sikhism',
+        correct: 'c'
     },
     {
         question: 'A form of Animism is:',
@@ -631,7 +631,7 @@ Religion and Language (5):
         b: 'Shintoism',
         c: 'Buddhism',
         d: 'Confucianism',
-        correct: ''
+        correct: 'c'
     },
     {
         question: 'Who made Confucianism?',
