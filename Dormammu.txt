@@ -610,43 +610,43 @@ Religion and Language (5):
         correct: ''
     },
     {
-        question: 'A form of Animism',
+        question: 'A form of Animism is:',
         a: 'Vodou',
         b: 'Christianity',
-        c: '',
-        d: '',
+        c: 'Shintoism',
+        d: 'Judaism',
         correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
+        question: 'Which country is subject to Sharia Law?',
+        a: 'Islam',
+        b: 'Egypt',
+        c: 'Kazakhstan',
+        d: 'Saudi Arabia',
+        correct: 'd'
+    },
+    {
+        question: 'Which religion had the Eightfold path',
+        a: 'Taoism',
+        b: 'Shintoism',
+        c: 'Buddhism',
+        d: 'Confucianism',
         correct: ''
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Who made Confucianism?',
+        a: 'King Henry II',
+        b: 'Mao Zedong',
+        c: 'Confucius',
+        d: 'A collective group meeting',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
-    },
-    {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which religion is most common in Russia?',
+        a: 'Western Orthodox',
+        b: 'Eastern Orthodox',
+        c: 'Communism ☭',
+        d: 'Religion was eliminated from Russia during the reign of the USSR',
+        correct: 'b'
     }
 ]
