@@ -30,7 +30,7 @@ function nextQuestion()
         oldQuestions = [];
     }
 
-    let i = ~~Math.round(Math.random() * questions.length);
+    let i = ~~(Math.random() * questions.length);
     oldQuestions.push(questions[i]);
     return questions.splice(i, 1)[0];
 }

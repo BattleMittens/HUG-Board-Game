@@ -162,6 +162,11 @@ class Tile
  */
 function init(numPlayers)
 {
+    window.onbeforeunload = () =>
+    {
+        return "Dude, are you sure you want to leave? Think of the kittens!";
+    }
+
     canvas = document.getElementById('canvas');
     ctx = canvas.getContext('2d');
 
@@ -589,6 +594,8 @@ function findCapitol(player)
 
 function gameOver(p)
 {
+    window.onbeforeunload = undefined;
+
     canvas.style.display = 'none';
     document.getElementById('gameover-screen').style.display = 'inline-block';
     document.getElementById('win-player').innerHTML = '<span style="color: rgb(' + playerColors[p] + ');">Player ' + p + ' has won!</span>';
