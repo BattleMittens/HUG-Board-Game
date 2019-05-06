@@ -25,9 +25,16 @@
             <div class="button">
                 <button type="button" onclick=
                 "
-                init(prompt('How many players are there? (Enter a positive whole number)', '4'));
-                document.getElementById('pandas').style.display = 'none';
-                document.getElementById('canvas').style.display = 'inline-block';
+                let input = Number(prompt('How many players are there? (Enter a # between 2-8)', '4'));
+
+                if(input >= 2 && input <= 8)
+                {
+                    init(input);
+                    document.getElementById('pandas').style.display = 'none';
+                    document.getElementById('canvas').style.display = 'inline-block';
+                }
+                else
+                    alert('Please enter a valid number! (2-8)');
                 "
                 > Click This When You're Ready To Move On!</button>
             </div>
@@ -51,6 +58,18 @@
                     <div><button id="btn-d">D</button></div>
                 </div>
             </div>
+        </div>
+
+        <div id="gameover-screen" style="display: none; background-color: white; padding: 10%; font-size: 5em; flex: 1;">
+            <h1 style="text-align: center;" id="win-player"></h1>
+            <a style="font-size: 24px;" href="index.html">Play Again?</a>
+            <p style="transform: skew(15deg, 15deg);">much wow</p>
+            <p style="transform: skew(15deg, -40deg);">good end screen</p>
+            <p style="margin-left: 50%; transform: skew(-15deg, 15deg);">11 / undefined</p>
+            <p style="margin-left: 25%; transform: skew(25deg, 20deg);">jeez this must've taken ages</p>
+            <p style="transform: skew(55deg, 10deg);">made by: nerds</p>
+            <p style="margin-left: 75%; transform: skew(10deg, 10deg)">do they ever go outside?</p>
+            <p style="margin-left: 10%; margin-top: 50px; transform: skew(10deg, -10deg)">my nose hurts ;(</p>
         </div>
     </body>
 </html>

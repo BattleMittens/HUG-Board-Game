@@ -19,6 +19,17 @@ let w, h;
 const DIMENSIONS = 64;
 
 /**
+ * Their dots will be this value if they are dead.
+ */
+const DEAD = -1;
+
+/**
+ * For image to map loading.
+ * If the alpha is this value that tile is a capitol
+ */
+const CAPITOL_ALPHA = 128;
+
+/**
  * Stores the camera offsets
  */
 let camera = 
@@ -44,11 +55,17 @@ let mouse =
 const playerColors = 
 [
     '20,20,20',
-    '73,27,73',
-    '27,73,0',
-    '73,27,0',
-    '0,27,73'
+    '73,27,73', //  y
+    '27,73,0', // y
+    '73,27,0', // y
+    '0,27,73', // y
+    '0,73,50', // y
+    '50,50,27', // y
+    '50,27,50', // y
+    '50,27,0' // y
 ];
+
+let overlayColor = '0,0,0,0';
 
 /**
  * Stores the dots available to each player (.length is how many players are playing)
@@ -89,6 +106,7 @@ class Tile
         this._x = x;
         this._y = y;
         this._dots = 0;
+        this._capitol = false;
 		
 		//Why, why would you ever do this?
         //this._player = player === undefined ? -1 : player;
@@ -131,6 +149,9 @@ class Tile
 
         return false;
     }
+
+    set capitol(c) { this._capitol = c; }
+    get capitol() { return this._capitol; }
 
     get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
 }
@@ -204,19 +225,29 @@ function loadMap(map, numPlayers, callback)
             for(let x = 0; x < img.width; x++)
             {
                 let pixel = ImageLib.getPixel(x, y);
+
                 for(let i = 0; i < splitCols.length; i++)
                 {
                     let c = splitCols[i];
+                    
+                    if(pixel[3] !== 255)
+                        console.log(pixel);
 
-                    if( c[0] === pixel[0] &&
-                        c[1] === pixel[1] &&
-                        c[2] === pixel[2])
+                    if( within(c[0], pixel[0], 10) &&
+                        within(c[1], pixel[1], 10) &&
+                        within(c[2], pixel[2], 10))
                     {
                         if(i <= numPlayers)
                         {
                             tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, i);
                             if(i !== NEUTRAL)
+                            {
                                 tiles[y][x].dots = 3;
+                                if(pixel[3] === CAPITOL_ALPHA)
+                                {
+                                    tiles[y][x].capitol = true;
+                                }
+                            }
                         }
                         else
                             tiles[y][x] = new Tile(x * DIMENSIONS, y * DIMENSIONS, NEUTRAL);
@@ -234,11 +265,20 @@ function loadMap(map, numPlayers, callback)
     });
 }
 
+function within(x, y, variation)
+{
+    return Math.abs(x - y) <= variation;
+}
+
 async function tick()
 {
+    let overlaySplit = overlayColor.split(',');
+    overlaySplit[3] = overlaySplit[3] > 0 ? overlaySplit[3] - 0.03 : 0;
+    setOverlayColor(...overlaySplit);
+
     if(!paused)
     {
-        // Key codes https://keycode.info/
+        // Key codes: https://keycode.info/
         if(downKeys['ArrowLeft'] || downKeys['a'])
             camera.x -= 5;
         if(downKeys['ArrowRight'] || downKeys['d'])
@@ -248,8 +288,7 @@ async function tick()
         if(downKeys['ArrowDown'] || downKeys['s'])
             camera.y += 5;
 
-        camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
-        camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
+        clampCamera();
 
         let guiElementOver = null;
         btns.forEach(b =>
@@ -270,7 +309,7 @@ async function tick()
             else
             {
                 let t = getTileMouseOver();
-                if(isAdjacent(t.x / DIMENSIONS, t.y / DIMENSIONS, getCurrentPlayer()))
+                if(t.moveable && isAdjacent(t.x / DIMENSIONS, t.y / DIMENSIONS, getCurrentPlayer()))
                 {
                     if(getDots() > 0)
                     {
@@ -280,7 +319,13 @@ async function tick()
                             {
                                 let correct = await askQuestion(nextQuestion());
                                 if(correct)
+                                {
+                                    if(t.capitol)
+                                    {
+                                        killPlayer(t.player);
+                                    }
                                     t.player = getCurrentPlayer();
+                                }
                                 else
                                     t.dots = 0;
                             }
@@ -328,6 +373,12 @@ function draw()
             ctx.fillStyle = `rgb(${tile.color})`;
             ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
 
+            if(tile.capitol)
+            {
+                ctx.fillStyle = 'rgba(255, 255, 0, 0.5)';
+                ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+            }
+
             ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
             if(!guiElementOver)
             {
@@ -338,7 +389,7 @@ function draw()
                 }
             }
 
-            if(getDots() > 0 && tile.player !== getCurrentPlayer() && isAdjacent(x, y, getCurrentPlayer()))
+            if(getDots() > 0 && tile.player !== getCurrentPlayer() && tile.moveable && isAdjacent(x, y, getCurrentPlayer()))
             {
                 ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
             }
@@ -379,6 +430,9 @@ function draw()
     let text = `${getDots()} dot${getDots() === 1 ? '' : 's'}`;
     ctx.fillStyle = 'white';
     ctx.fillText(text, w / 2 - ctx.measureText(text).width / 2, 32 * 2 - 25);
+
+    ctx.fillStyle = 'rgba(' + overlayColor + ')';
+    ctx.fillRect(0, 0, w, h);
 }
 
 function isAdjacent(x, y, player)
@@ -403,6 +457,23 @@ function isAdjacent(x, y, player)
     return false;
 }
 
+function killPlayer(player)
+{
+    for(let y = 0; y < tiles.length; y++)
+    {
+        for(let x = 0; x < tiles[y].length; x++)
+        {
+            if(tiles[y][x].player === player)
+            {
+                tiles[y][x].player = NEUTRAL;
+                tiles[y][x].dots = 0;
+                tiles[y][x].capitol = false;
+                players[player] = DEAD;
+            }
+        }
+    }
+}
+
 /**
  * How many dots to reward the given player this turn (this will not add their previous dots)
  * @param {number} playerNum The index of the player
@@ -420,7 +491,7 @@ async function calculateDots(playerNum)
     
     let correct = await askQuestion(nextQuestion());
     
-    let base = Math.log(pts * 10);
+    let base = Math.log2(pts * 10);
     return Math.round(correct ? base : base / Math.log(pts));
 }
 
@@ -450,6 +521,11 @@ async function askQuestion(question)
         }).then(res => correct = res);
     
     document.getElementById('question-prompt').style.display = 'none';
+    
+    if(correct)
+        setOverlayColor(0, 255, 0, 0.8);
+    else
+        setOverlayColor(255, 0, 0, 0.8);
 
     pauseTicking(false);
     return correct;
@@ -460,11 +536,61 @@ async function askQuestion(question)
  */
 async function nextPlayer()
 {
-    currentPlayer++;
-    if(players[currentPlayer] === undefined) // Max player reached
-        currentPlayer = 1;
+    let playerAlive = undefined;
+    let i;
+    for(i = 1; i < players.length; i++)
+    {
+        if(players[i] !== DEAD)
+        {
+            if(playerAlive === undefined)
+                playerAlive = i;
+            else
+                break;
+        }
+    }
+    
+    if(i === players.length)
+        gameOver(playerAlive);
+    else
+    {
+        if(players[currentPlayer + 1] === undefined) // Max player reached
+            currentPlayer = 1;
+        else
+            currentPlayer++;
 
-    players[currentPlayer] += await calculateDots(currentPlayer);
+        if(players[currentPlayer] === DEAD)
+            nextPlayer();
+
+        players[currentPlayer] += await calculateDots(currentPlayer);
+
+        let tile = findCapitol(currentPlayer);
+        camera.x = tile.x - w / 2;
+        camera.y = tile.y - h / 2;
+
+        clampCamera();
+    }
+}
+
+function clampCamera()
+{
+    camera.x = clamp(camera.x, 0, tiles[0].length * DIMENSIONS - w);
+    camera.y = clamp(camera.y, 0, tiles.length * DIMENSIONS - h);
+}
+
+function findCapitol(player)
+{
+    for(let y = 0; y < tiles.length; y++)
+        for(let x = 0; x < tiles[y].length; x++)
+            if(tiles[y][x].player === player && tiles[y][x].capitol)
+                return tiles[y][x];
+    return null;
+}
+
+function gameOver(p)
+{
+    canvas.style.display = 'none';
+    document.getElementById('gameover-screen').style.display = 'inline-block';
+    document.getElementById('win-player').innerHTML = '<span style="color: rgb(' + playerColors[p] + ');">Player ' + p + ' has won!</span>';
 }
 
 function pauseTicking(p)
@@ -493,6 +619,11 @@ function getCurrentPlayer()
 function getPlayerColor()
 {
     return playerColors[getCurrentPlayer()];
+}
+
+function setOverlayColor(r, g, b, a)
+{
+    overlayColor = `${r},${g},${b},${a}`;
 }
 
 /**
