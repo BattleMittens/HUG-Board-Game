@@ -1,5 +1,4 @@
-﻿Geography (1):
-[
+﻿[
     {
         question: 'What is the name of the meridian at zero degrees longitude',
         a: 'Greenwich Meridian',
@@ -79,10 +78,7 @@
         c: 'Functional',
         d: 'Perceptual',
         correct: 'a,b'
-    }
-
-
-Population (4):
+    },
     {
         question: 'Where will the majority of LDC population be in 2050?',
         a: 'Sub-Saharan Africa',
@@ -162,8 +158,7 @@ Population (4):
         c: 'It doesn't',
         d: 'Crude Birth Rate',
         correct: 'b'
-    }
-Culture (2, 6, 7):
+    },
     {
         question: 'In what period did humans start producing food rather than gathering it?',
         a: 'Neolithic',
@@ -243,8 +238,7 @@ Culture (2, 6, 7):
         c: 'Ghettos are not separated from the rest of society',
         d: 'Ghettos are created against the will of the residents',
         correct: 'd'
-    }
-Political Organizations (3, 12):
+    },
     {
         question: 'Transferability is',
         a: 'How acceptable a culture is in other places',
@@ -324,8 +318,7 @@ Political Organizations (3, 12):
         c: 'The warping of the flat world into a sphere',
         d: 'The recent increased connectedness of the world',
         correct: 'd'
-    }
-Agriculture (8):
+    },
     {
         question: 'Cooking food is an example of a',
         a: 'Primary activity',
@@ -405,8 +398,7 @@ Agriculture (8):
         c: 'The Communist Party of Greenland',
         d: 'Using science to create better farm tools',
         correct: 'b'
-    }
-Industry and Economy (9, 10):
+    },
     {
         question: 'An example of a spatially fixed cost is',
         a: 'Gold per ounce',
@@ -486,8 +478,7 @@ Industry and Economy (9, 10):
         c: 'England',
         d: 'France',
         correct: 'c'
-    }
-Cities (11):
+    },
     {
         question: 'Which number is closest to the percentage of MDC populations were urban in 1950?',
         a: '30',
@@ -567,8 +558,7 @@ Cities (11):
         c: 'Southeast Asia',
         d: 'Latin America',
         correct: 'd'
-    }
-Religion and Language (5):
+    },
     {
         question: 'Which is an example of a univeralizing religion?',
         a: 'Buddhism',
