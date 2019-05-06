@@ -1,5 +1,28 @@
 Geography (1): 8
+/*
 
+[
+    //first question
+    {
+        question: 'What was the year Jamestown was founded?',
+        a: '1607',
+        b: '1812',
+        c: '1600',
+        d: '1774',
+        correct: 'a'
+    }
+    //next question
+    {
+        question: 'Who contributed to the project so far?',
+        a: 'Troy',
+        b: 'Dan',
+        c: 'Corns',
+        d: 'Kyle',
+        correct: 'a,c'
+    }
+    ]
+
+*/
 What is the name of the meridian at zero degrees longitude?
 Prime Meridian
 
