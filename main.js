@@ -153,7 +153,7 @@ class Tile
     set capitol(c) { this._capitol = c; }
     get capitol() { return this._capitol; }
 
-    get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
+    get color() { return this.player !== -1 ? playerColors[this.player] : '0,0,0' }
 }
 
 /**
