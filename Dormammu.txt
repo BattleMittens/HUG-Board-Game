@@ -1,4 +1,4 @@
-Geography (1):
+﻿Geography (1):
 [
     {
         question: 'What is the name of the meridian at zero degrees longitude',
@@ -218,7 +218,7 @@ Culture (2, 6, 7):
         b: 'Europeans and Asians',
         c: 'Europeans and Africans',
         d: 'Europeans and Latin Americans',
-        correct: 'd'
+        correct: 'c'
     },
     {
         question: 'Amalgamation Theory is the idea of the US as a',
@@ -229,344 +229,344 @@ Culture (2, 6, 7):
         correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The Doctrine of First Effective Settlement holds that',
+        a: 'The original society in a location rarely falls',
+        b: 'The original society in a location decides cultural heritage',
+        c: 'The original society in a location is one of three major categories',
+        d: 'The original society in a location is a small, temporary colony',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'A ghetto is different from an ethnic island in that',
+        a: 'Ghettos are not based on ethnicity',
+        b: 'Ethnic islands are surrounded by water',
+        c: 'Ghettos are not separated from the rest of society',
+        d: 'Ghettos are created against the will of the residents',
+        correct: 'd'
     }
 Political Organizations (3, 12):
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Transferability is',
+        a: 'How acceptable a culture is in other places',
+        b: 'Acceptable costs of exchange',
+        c: 'The rate of diffusion',
+        d: 'The distance required in shipping a product',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Distance Decay is caused by',
+        a: 'Friction of distance',
+        b: 'Cultural tension',
+        c: 'Apathy',
+        d: 'Decreased communication over long distances',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'An activity space is',
+        a: 'A designated sector of a city for a specific economic activity',
+        b: 'An area where a cultural trait is practiced',
+        c: 'A model created by concentric circles on a map of daily activity',
+        d: 'The area a person covers in daily life',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The distance beyond which people are unwilling to interact is called the',
+        a: 'Critical distance',
+        b: 'Breaking point',
+        c: 'Apathy distance',
+        d: 'Line of connection severing',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Mental maps tend to be biased towards',
+        a: 'Areas the person would like to visit',
+        b: 'Areas around the activity space of the person',
+        c: 'Borders, but not roads or other lines of transport',
+        d: 'The built environment',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The German word Gastarbeiter refers to which of the following?',
+        a: 'Ethnic minorities',
+        b: 'Nomads',
+        c: 'Refugees',
+        d: 'Guest workers',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The majority of migrants are',
+        a: 'Voluntary',
+        b: 'Forced',
+        c: 'Refugees',
+        d: 'Men',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'An example of a pull factor is',
+        a: 'War in home country',
+        b: 'Famine in destination',
+        c: 'Family in destination',
+        d: 'A well-paying job in home country',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Migration in a series of small, less intrusive moves is',
+        a: 'Chain migration',
+        b: 'Cluster migration',
+        c: 'Step migration',
+        d: 'Creep migration',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Globalization refers to',
+        a: 'Companies outsourcing to LDCs',
+        b: 'The spread of an empire over a large area',
+        c: 'The warping of the flat world into a sphere',
+        d: 'The recent increased connectedness of the world',
+        correct: 'd'
     }
 Agriculture (8):
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
+        question: 'Cooking food is an example of a',
+        a: 'Primary activity',
+        b: 'Secondary activity',
+        c: 'Tertiary activity',
+        d: 'Quaternary activity',
         correct: ''
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Mining is an example of a',
+        a: 'Primary activity',
+        b: 'Secondary activity',
+        c: 'Tertiary activity',
+        d: 'Quaternary activity',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The people who look at your receipt at Costco participate in this sector of the economy',
+        a: 'Primary activity',
+        b: 'Secondary activity',
+        c: 'Tertiary activity',
+        d: 'Quaternary activity',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Marketing is an example of a',
+        a: 'Primary activity',
+        b: 'Secondary activity',
+        c: 'Tertiary activity',
+        d: 'Quaternary activity',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which of the following lacks significant internal means of transporation?',
+        a: 'Greenland',
+        b: 'Cuba',
+        c: 'Mexico',
+        d: 'India',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which of the following areas is frost-free year-round?',
+        a: 'The Middle East',
+        b: 'Australia',
+        c: 'Southern Mexico',
+        d: 'Northern South America',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Animals used for nomadic herding are all',
+        a: 'Used for milk',
+        b: 'Wool producers',
+        c: 'Able to subsist on sparse forage',
+        d: 'Important to the culture of the regions they inhabit',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Sedentary intensive agriculture is mostly practiced in',
+        a: 'Sub-Saharan Africa',
+        b: 'Pacific Islands',
+        c: 'Northern South America',
+        d: 'Southeast Asia',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The Boserup thesis concludes that',
+        a: 'Nomadic herders held significant political power in the past',
+        b: 'Extensive systems must shift to intensive systems as population grows',
+        c: 'Rice dominates all other crops as intensive agriculture becomes popular',
+        d: 'Areas in temperate climates are destined to become more developed',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The Green Revolution involved',
+        a: 'The domestication of plants',
+        b: 'Genetic engineering',
+        c: 'The Communist Party of Greenland',
+        d: 'Using science to create better farm tools',
+        correct: 'b'
     }
 Industry and Economy (9, 10):
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'An example of a spatially fixed cost is',
+        a: 'Gold per ounce',
+        b: 'Water',
+        c: 'Wages under a labor union contract',
+        d: 'Transportation',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'A material orientation involves',
+        a: 'Valuing material costs over labor costs',
+        b: 'Calculating the angle of most efficient travel between material sources',
+        c: 'Transporting goods from a factory to the material source',
+        d: 'Locating clost to materials rather than market',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Ubiquitous industries are',
+        a: 'Industries one can find everywhere',
+        b: 'Ghost industries',
+        c: 'Industries which are represented by one brandname everywhere on earth',
+        d: 'Industries found in small clusters',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The site where goods must be transfered to a new mode of transport are called',
+        a: 'Airports',
+        b: 'Loading docks',
+        c: 'Break-of-Bulk points',
+        d: 'Trans-mode zones',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Weber's model of industrial location involves all except',
+        a: 'Agglomeration costs',
+        b: 'Transportation costs',
+        c: 'Labor costs',
+        d: 'Material costs',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Industries for which transport costs are unimportant are called',
+        a: 'Footloose industries',
+        b: 'Wandering industries',
+        c: 'Ubiquitous industries',
+        d: 'Agglomerations',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Flexible production involves',
+        a: 'Conforming to supply and demand',
+        b: 'Delivering parts as they are used in production',
+        c: 'Multi-purpose factories',
+        d: 'Industries encompassing multiple product types',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which of the following industries are least susceptible to offshoring and outsourcing?',
+        a: 'Civil Engineering',
+        b: 'Software Development',
+        c: 'Accounting',
+        d: 'Call centers',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which of the following is a direct way transnational corporations drive globalization',
+        a: 'Expanding markets to LDCs',
+        b: 'Creating culturally influenced products',
+        c: 'Buying home-made products from LDCs',
+        d: 'Foreign direct investments',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'In which country did the Industrial Revolution begin?',
+        a: 'Germany',
+        b: 'Norway',
+        c: 'England',
+        d: 'France',
+        correct: 'c'
     }
 Cities (11):
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which number is closest to the percentage of MDC populations were urban in 1950?',
+        a: '30',
+        b: '40',
+        c: '50',
+        d: '60',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Which of the following is not a conurbation?',
+        a: 'Boston to Washington D.C.',
+        b: 'Coastal California',
+        c: 'Georgia to the Everglades',
+        d: 'Montreal to Windsor',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'A tight settlement surrounding a road is called a',
+        a: 'Linear hamlet',
+        b: 'String village',
+        c: 'Grouped Hamlet',
+        d: 'Cluster Village',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'A suburb is a(n)',
+        a: 'Area of specific purpose in a larger urban area',
+        b: 'Area specifically for housing outside the inner city',
+        c: 'An ethnic area of a city',
+        d: 'A business park',
+        correct: 'a'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The basic sector of an economy involves',
+        a: 'Agriculture',
+        b: 'Mining',
+        c: 'Manufacturing',
+        d: 'Exports',
+        correct: 'd'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'According to the rank-size rule, the 8th largest city should have about',
+        a: 'The same population of the largest',
+        b: '1/8 the population of the largest',
+        c: '1/2 the population of the largest',
+        d: '1/4 the population of the largest',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'A Primate city is a city',
+        a: 'Run by apes',
+        b: 'With more than twice the population of the next largest',
+        c: 'Larger than all the others combined in an LDC',
+        d: 'Caused by urban sprawl',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The Sector Model of cities was created by',
+        a: 'Weber',
+        b: 'Hoyt',
+        c: 'Zorrilla',
+        d: 'Rielly',
+        correct: 'b'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'The group most common in US suburban housing is',
+        a: 'African Americans',
+        b: 'Asians',
+        c: 'Whites',
+        d: 'Hispanics',
+        correct: 'c'
     },
     {
-        question: '',
-        a: '',
-        b: '',
-        c: '',
-        d: '',
-        correct: ''
+        question: 'Cities in this region are quickly expanding, with the poorest housing on the outside',
+        a: 'North America',
+        b: 'The Middle East',
+        c: 'Southeast Asia',
+        d: 'Latin America',
+        correct: 'd'
     }
 Religion and Language (5):
     {
