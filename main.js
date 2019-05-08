@@ -34,7 +34,7 @@ const MINE_ALPHA = 233;
 /**
  * Stores the camera offsets
  */
-let camera = 
+let camera =
 {
     x: 0,
     y: 0
@@ -54,7 +54,7 @@ let mouse =
 /**
  * Stores the corresponding colors to each player
  */
-const playerColors = 
+const playerColors =
 [
     '20,20,20',
     '73,27,73', //  y
@@ -110,7 +110,7 @@ class Tile
         this._dots = 0;
         this._capitol = false;
         this._mine = false;
-		
+
 		//Why, why would you ever do this?
         //this._player = player === undefined ? -1 : player;
 		if(player === undefined)
@@ -125,7 +125,7 @@ class Tile
 
     get player() { return this._player; }
     set player(p) { this._player = p ; }
-    
+
     get moveable() { return this.player !== -1; }
 
     get x() { return this._x; }
@@ -240,7 +240,7 @@ function loadMap(map, numPlayers, callback)
                 for(let i = 0; i < splitCols.length; i++)
                 {
                     let c = splitCols[i];
-                    
+
                     if( within(c[0], pixel[0], 10) &&
                         within(c[1], pixel[1], 10) &&
                         within(c[2], pixel[2], 10))
@@ -312,7 +312,7 @@ async function tick()
                     return;
                 }
             });
-        
+
         if(mouse.justDown)
         {
             if(guiElementOver)
@@ -442,7 +442,7 @@ function draw()
             }
         }
     });
-    
+
     ctx.fillStyle = `rgba(${getPlayerColor()},0.8)`;
     ctx.fillRect(w / 2 - 60, 32 - 25, 120, 50);
 
@@ -513,9 +513,9 @@ async function calculateDots(playerNum)
                     }
                 });
         });
-    
+
     let correct = await askQuestion(nextQuestion());
-    
+
     let base = Math.log2(pts * 10);
     return Math.round((correct ? base : base / Math.log(pts)) + bonusPts);
 }
@@ -532,7 +532,7 @@ async function askQuestion(question)
     document.getElementById('answer-b').innerHTML = question.b;
     document.getElementById('answer-c').innerHTML = question.c;
     document.getElementById('answer-d').innerHTML = question.d;
-    
+
     let correct;
 
     await new Promise(resolve =>
@@ -548,9 +548,9 @@ async function askQuestion(question)
             });
 
         }).then(res => correct = res);
-    
+
     document.getElementById('question-prompt').style.display = 'none';
-    
+
     if(correct)
         setOverlayColor(0, 255, 0, 0.8);
     else
@@ -577,7 +577,7 @@ async function nextPlayer()
                 break;
         }
     }
-    
+
     if(i === players.length)
         gameOver(playerAlive);
     else
