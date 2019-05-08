@@ -29,6 +29,8 @@ const DEAD = -1;
  */
 const CAPITOL_ALPHA = 128;
 
+const MINE_ALPHA = 233;
+
 /**
  * Stores the camera offsets
  */
@@ -107,6 +109,7 @@ class Tile
         this._y = y;
         this._dots = 0;
         this._capitol = false;
+        this._mine = false;
 		
 		//Why, why would you ever do this?
         //this._player = player === undefined ? -1 : player;
@@ -153,7 +156,10 @@ class Tile
     set capitol(c) { this._capitol = c; }
     get capitol() { return this._capitol; }
 
-    get color() { return this.player !== -1 ? playerColors[this.player] : '#000' }
+    get mine() { return this._mine; }
+    set mine(m) { this._mine = m; }
+
+    get color() { return this.player !== -1 ? playerColors[this.player] : '0,0,0' }
 }
 
 /**
@@ -249,6 +255,11 @@ function loadMap(map, numPlayers, callback)
                                 {
                                     tiles[y][x].capitol = true;
                                 }
+                            }
+
+                            if(pixel[3] === MINE_ALPHA)
+                            {
+                                tiles[y][x].mine = true;
                             }
                         }
                         else
@@ -381,6 +392,12 @@ function draw()
                 ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
             }
 
+            if(tile.mine)
+            {
+                ctx.fillStyle = 'rgba(0, 255, 0, 0.3)';
+                ctx.fillRect(drawX, drawY, DIMENSIONS, DIMENSIONS);
+            }
+
             ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
             if(!guiElementOver)
             {
@@ -482,19 +499,25 @@ function killPlayer(player)
  */
 async function calculateDots(playerNum)
 {
+    let bonusPts = 0;
     let pts = 0;
     tiles.forEach(tilesArr =>
         {
             tilesArr.forEach(t =>
                 {
-                    pts += t.player === playerNum ? 1 : 0;
+                    if(t.player === playerNum)
+                    {
+                        pts += 1;
+                        if(t.mine)
+                            bonusPts += 5;
+                    }
                 });
         });
     
     let correct = await askQuestion(nextQuestion());
     
     let base = Math.log2(pts * 10);
-    return Math.round(correct ? base : base / Math.log(pts));
+    return Math.round((correct ? base : base / Math.log(pts)) + bonusPts);
 }
 
 async function askQuestion(question)
